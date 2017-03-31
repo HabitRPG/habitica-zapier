@@ -54,113 +54,113 @@ module.exports = {
     ],
     sample: {
       delta: {
-        type: 'undefined',
-        label: 'undefined'
+        type: 'number',
+        label: 'Delta'
       },
-      direction: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__attribute: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__checklist: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__checklist[]completed: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__checklist[]id: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__checklist[]text: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__collapseChecklist: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      task__completed: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      task__date: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__dateCreated: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__id: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__notes: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__priority: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      task__reminders: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__tags__79a679a5-d5a4-4cdc-b371-e3c0dc6d8337: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      task__text: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__type: {
-        type: 'string',
-        label: 'undefined'
-      },
-      task__value: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      type: {
-        type: 'string',
-        label: 'Type'
-      },
-      user___id: {
-        type: 'string',
-        label: 'undefined'
-      },
-      user__stats__gp: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      user__stats__hp: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      user__stats__maxHealth: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      user__stats__maxMP: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      user__stats__mp: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      user__stats__toNextLevel: {
-        type: 'undefined',
-        label: 'undefined'
-      }
+      // direction: {
+      //   type: 'string',
+      //   label: 'Direction'
+      // },
+      // task__attribute: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__checklist: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__checklist[]completed: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__checklist[]id: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__checklist[]text: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__collapseChecklist: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // task__completed: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // task__date: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__dateCreated: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__id: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__notes: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__priority: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // task__reminders: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__tags__79a679a5-d5a4-4cdc-b371-e3c0dc6d8337: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // task__text: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__type: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // task__value: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // type: {
+      //   type: 'string',
+      //   label: 'Type'
+      // },
+      // user___id: {
+      //   type: 'string',
+      //   label: 'undefined'
+      // },
+      // user__stats__gp: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // user__stats__hp: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // user__stats__maxHealth: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // user__stats__maxMP: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // user__stats__mp: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // },
+      // user__stats__toNextLevel: {
+      //   type: 'undefined',
+      //   label: 'undefined'
+      // }
     },
 
     perform: triggerTaskactivity

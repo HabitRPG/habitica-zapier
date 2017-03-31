@@ -1,38 +1,51 @@
-// Created by 'zapier convert'. This is just a stub - you will need to edit!
-
-const GetgroupTrigger = require('./triggers/get_group');
-const GroupchatreceivedTrigger = require('./triggers/group_chat_received');
-const TaskactivityTrigger = require('./triggers/task_activity');
-const FindtaskSearch = require('./searches/find_task');
-const ScoretaskCreate = require('./creates/score_task');
-const CreatetaskCreate = require('./creates/create_task');
+const GetGroupTrigger = require('./triggers/get_group');
+const GroupChatReceivedTrigger = require('./triggers/group_chat_received');
+const TaskActivityTrigger = require('./triggers/task_activity');
+const FindTaskSearch = require('./searches/find_task');
+const ScoreTaskCreate = require('./creates/score_task');
+const CreateTaskCreate = require('./creates/create_task');
 
 const App = {
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
 
   authentication: {
-      // TODO: complete auth settings
-    },
+    type: 'custom',
+    fields: [
+      {key: 'userId', label: 'User Id', required: true, type: 'string'},
+      {key: 'apiKey', label: 'API Key', required: true, type: 'string'},
+    ],
+    test: {
+      url: 'https://habitica.com/api/v3/user'
+    }
+  },
+
+  beforeRequest: [
+    (request, z, bundle) => {
+      request.headers['x-api-user'] = bundle.authData.userId;
+      request.headers['x-api-key'] = bundle.authData.apiKey;
+
+      return request;
+    }
+  ],
 
   resources: {
   },
 
   triggers: {
-    [GetgroupTrigger.key]: GetgroupTrigger,,
-[GroupchatreceivedTrigger.key]: GroupchatreceivedTrigger,,
-[TaskactivityTrigger.key]: TaskactivityTrigger,
+    [GetGroupTrigger.key]: GetGroupTrigger,
+    [GroupChatReceivedTrigger.key]: GroupChatReceivedTrigger,
+    [TaskActivityTrigger.key]: TaskActivityTrigger,
   },
 
   searches: {
-    [FindtaskSearch.key]: FindtaskSearch,
+    [FindTaskSearch.key]: FindTaskSearch,
   },
 
   creates: {
-    [ScoretaskCreate.key]: ScoretaskCreate,,
-[CreatetaskCreate.key]: CreatetaskCreate,
+    [ScoreTaskCreate.key]: ScoreTaskCreate,
+    [CreateTaskCreate.key]: CreateTaskCreate,
   }
-
 };
 
 module.exports = App;

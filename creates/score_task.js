@@ -34,7 +34,7 @@ module.exports = {
       {
         key: 'direction',
         label: 'Direction',
-        helpText: 'Either 'up' or 'down'. If you want to mark a given Daily or ToDo as completed, score 'up'.',
+        helpText: 'Either "up" or "down". If you want to mark a given Daily or ToDo as completed, score "up".',
         type: 'string',
         required: true
       }
