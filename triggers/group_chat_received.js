@@ -1,6 +1,3 @@
-// Trigger stub created by 'zapier convert'. This is just a stub - you will need to edit!
-
-// triggers on groupchatreceived with a certain tag
 const triggerGroupchatreceived = (z, bundle) => {
   const responsePromise = z.request({
     url: 'http://example.com/api/groupChatReceived.json', // TODO this is just an example
@@ -14,11 +11,11 @@ const triggerGroupchatreceived = (z, bundle) => {
 
 module.exports = {
   key: 'group_chat_received',
-  noun: 'Groupchatreceived',
+  noun: 'chat',
 
   display: {
-    label: 'Get Groupchatreceived',
-    description: 'Triggers on a new groupchatreceived.'
+    label: 'New Group Chat',
+    description: 'Triggers when a new chat appear in a group (party or guild).'
   },
 
   operation: {
@@ -33,23 +30,23 @@ module.exports = {
     ],
     sample: {
       chat__contributor__admin: {
-        type: 'undefined',
-        label: 'undefined'
+        type: 'Boolean',
+        label: 'User is Moderator'
       },
       chat__contributor__contributions: {
         type: 'string',
-        label: 'undefined'
+        label: 'User Contributions'
       },
       chat__contributor__level: {
-        type: 'undefined',
-        label: 'undefined'
+        type: 'number',
+        label: 'User Contributor Level'
       },
       chat__contributor__text: {
         type: 'string',
-        label: 'undefined'
+        label: 'User Contributor Title'
       },
       chat__flagCount: {
-        type: 'undefined',
+        type: 'number',
         label: 'Flag Count'
       },
       chat__id: {
@@ -61,7 +58,7 @@ module.exports = {
         label: 'Chat Text'
       },
       chat__timestamp: {
-        type: 'undefined',
+        type: 'date',
         label: 'Chat Post Date'
       },
       chat__user: {
