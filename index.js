@@ -5,6 +5,8 @@ const FindTaskSearch = require('./searches/find_task');
 const ScoreTaskCreate = require('./creates/score_task');
 const CreateTaskCreate = require('./creates/create_task');
 
+const groupResource = require('./resources/group');
+
 const App = {
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
@@ -30,6 +32,7 @@ const App = {
   ],
 
   resources: {
+    group: groupResource,
   },
 
   triggers: {
