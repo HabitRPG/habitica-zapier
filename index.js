@@ -1,4 +1,3 @@
-const GetGroupTrigger = require('./triggers/get_group');
 const GroupChatReceivedTrigger = require('./triggers/group_chat_received');
 const TaskActivityTrigger = require('./triggers/task_activity');
 const FindTaskSearch = require('./searches/find_task');
@@ -36,7 +35,6 @@ const App = {
   },
 
   triggers: {
-    [GetGroupTrigger.key]: GetGroupTrigger,
     [GroupChatReceivedTrigger.key]: GroupChatReceivedTrigger,
     [TaskActivityTrigger.key]: TaskActivityTrigger,
   },
