@@ -1,17 +1,88 @@
-const triggerGroupchatreceived = (z, bundle) => {
-  const responsePromise = z.request({
-    url: 'http://example.com/api/groupChatReceived.json', // TODO this is just an example
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
+'use strict';
+
+const subscribeHook = (z, bundle) => {
+  const data = {
+    url: bundle.targetUrl,
+    label: 'Zapier Group Chat Received Webhook',
+    type: 'groupChatReceived',
+    options: {
+      groupId: bundle.inputData.groupId
     }
+  };
+
+  const promise = z.request({
+    url: 'https://habitica.com/api/v3/user/webhook',
+    method: 'POST',
+    body: data,
   });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
+
+  return promise.then((response) => JSON.parse(response.content).data);
 };
+
+const unsubscribeHook = (z, bundle) => {
+  const hookId = bundle.subscribeData.id;
+
+  const promise = z.request({
+    url: `https://habitica.com/api/v3/user/webhook/${hookId}`,
+    method: 'DELETE',
+  });
+
+  return promise.then((response) => JSON.parse(response.content).data);
+};
+
+const getChat = (z, bundle) => {
+  const data = convertWebhookDataToZapier(bundle.cleanedRequest);
+
+  return [data];
+};
+
+const getFallbackRealChat = (z, bundle) => {
+  const url = `https://habitica.com/api/v3/groups/${bundle.inputData.groupId}/chat`;
+  const responsePromise = z.request({
+    url: url
+  });
+
+  return responsePromise.then(response => {
+    const res = JSON.parse(response.content);
+
+    if (!res.success) {
+      z.console.log(res);
+      return;
+    }
+
+    return [convertWebhookDataToZapier({
+      chat: res.data[0],
+      group: {
+        id: bundle.inputData.groupId,
+        name: 'Group Name',
+      },
+    })];
+  });
+};
+
+function convertWebhookDataToZapier (data) {
+  const chat = data.chat;
+  const group = data.group;
+
+  return {
+    id: chat.id, // for some reason, Zapier needs this at the top level
+    chat: {
+      id: chat.id,
+      flagCount: chat.flagCount,
+      text: chat.text,
+      timestamp: chat.timestamp
+    },
+    sender: {
+      id: chat.uuid,
+      name: chat.user
+    },
+    group: group
+  };
+}
 
 module.exports = {
   key: 'group_chat_received',
-  noun: 'chat',
+  noun: 'Chat',
 
   display: {
     label: 'New Group Chat',
@@ -19,66 +90,42 @@ module.exports = {
   },
 
   operation: {
+    type: 'hook',
     inputFields: [
       {
         key: 'groupId',
         label: 'Group',
-        helpText: 'Choose one of your groups (Party or Guilds).',
+        helpText: 'Choose one of your groups (Party or Guilds). The ID can be found on the group page on the website.',
         type: 'string',
         required: true
       }
     ],
-    sample: {
-      chat__contributor__admin: {
-        type: 'Boolean',
-        label: 'User is Moderator'
-      },
-      chat__contributor__contributions: {
-        type: 'string',
-        label: 'User Contributions'
-      },
-      chat__contributor__level: {
-        type: 'number',
-        label: 'User Contributor Level'
-      },
-      chat__contributor__text: {
-        type: 'string',
-        label: 'User Contributor Title'
-      },
-      chat__flagCount: {
-        type: 'number',
-        label: 'Flag Count'
-      },
-      chat__id: {
-        type: 'string',
-        label: 'Chat UUID'
-      },
-      chat__text: {
-        type: 'string',
-        label: 'Chat Text'
-      },
-      chat__timestamp: {
-        type: 'date',
-        label: 'Chat Post Date'
-      },
-      chat__user: {
-        type: 'string',
-        label: 'User Name'
-      },
-      chat__uuid: {
-        type: 'string',
-        label: 'User UUID'
-      },
-      group__id: {
-        type: 'string',
-        label: 'Group UUID'
-      },
-      group__name: {
-        type: 'string',
-        label: 'Group Name'
-      }
-    },
 
-    perform: triggerGroupchatreceived
+
+    performSubscribe: subscribeHook,
+    performUnsubscribe: unsubscribeHook,
+    perform: getChat,
+    performList: getFallbackRealChat,
+
+    sample: convertWebhookDataToZapier({
+      chat: {
+        contributor: {
+          admin: false,
+          contributions: '',
+          level: 7,
+          text: 'Legend'
+        },
+        flagCount: 0,
+        id: 'chat-id',
+        text: 'Chat Message',
+        timestamp: 10001,
+        user: 'User',
+        uuid: 'user-id',
+      },
+      group: {
+        id: 'group-id',
+        name: 'Group Name'
+      },
+    }),
   }
 };
