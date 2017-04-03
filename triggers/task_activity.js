@@ -1,27 +1,136 @@
-// Trigger stub created by 'zapier convert'. This is just a stub - you will need to edit!
+'use strict';
 
-// triggers on taskactivity with a certain tag
-const triggerTaskactivity = (z, bundle) => {
-  const responsePromise = z.request({
-    url: 'http://example.com/api/taskActivity.json', // TODO this is just an example
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
+const subscribeHook = (z, bundle) => {
+  const data = {
+    url: bundle.targetUrl,
+    label: 'Zapier Task Webhook',
+    type: 'taskActivity',
+    options: {
+      scored: bundle.inputData.scored === 'true',
+      created: bundle.inputData.created === 'true',
+      updated: bundle.inputData.updated === 'true',
+      deleted: bundle.inputData.deleted === 'true',
     }
+  };
+
+  const promise = z.request({
+    url: 'https://habitica.com/api/v3/user/webhook',
+    method: 'POST',
+    body: data,
   });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
+
+  return promise.then((response) => JSON.parse(response.content).data);
+};
+
+const unsubscribeHook = (z, bundle) => {
+  const hookId = bundle.subscribeData.id;
+
+  const promise = z.request({
+    url: `https://habitica.com/api/v3/user/webhook/${hookId}`,
+    method: 'DELETE',
+  });
+
+  return promise.then((response) => JSON.parse(response.content).data);
+};
+
+const getTask = (z, bundle) => {
+  const data = bundle.cleanedRequest;
+
+  return [convertWebhookDataToZapier(data)];
+};
+
+const getFallbackRealTask = (z, bundle) => {
+  const url = 'https://habitica.com/api/v3/tasks/user';
+  const responsePromise = z.request({
+    url: url
+  });
+
+  return responsePromise.then(response => {
+    const res = JSON.parse(response.content);
+
+    if (!res.success) {
+      z.console.log(res);
+      return;
+    }
+
+    return [convertWebhookDataToZapier(Object.assign({}, res.data[0], fakeSampleData))];
+  });
+};
+
+function convertWebhookDataToZapier (data) {
+  return {
+    id: data.task.id,
+    task: data.task,
+    webhookType: data.type,
+    taskScoredData: {
+      direction: data.direction,
+      delta: data.delta,
+      user: data.user,
+    },
+  };
+}
+
+const fakeSampleData = {
+  type: 'scored',
+  direction: 'up',
+  delta: 10,
+  task: {
+    text: 'Some text',
+    notes: 'Some notes',
+    type: 'todo',
+    value: 50
+  },
+  user: {
+    _id: 'user-id',
+    _tmp: {},
+    stats: {
+      toNextLevel: 10,
+      maxHealth: 50,
+      maxMP: 100,
+      hp: 45,
+      mp: 50,
+      exp: 10,
+      gp: 10,
+      lvl: 10,
+      class: 'warrior',
+      points: 10,
+      str: 10,
+      con: 10,
+      int: 10,
+      per: 10,
+      buffs: {
+        str: 10,
+        int: 10,
+        per: 10,
+        con: 10,
+        stealth: 10,
+        streaks: false,
+        snowball: false,
+        spookySparkles: false,
+        shinySeed: false,
+        seafoam: false,
+      },
+      training: {
+        int: 10,
+        per: 10,
+        str: 10,
+        con: 10,
+      },
+    },
+  },
 };
 
 module.exports = {
   key: 'task_activity',
-  noun: 'Taskactivity',
+  noun: 'Task',
 
   display: {
-    label: 'Get Taskactivity',
-    description: 'Triggers on a new taskactivity.'
+    label: 'Task Activity',
+    description: 'Triggers when a change happens to a task (created, updated, deleted, scored).'
   },
 
   operation: {
+    type: 'hook',
     inputFields: [
       {
         key: 'scored',
@@ -52,117 +161,12 @@ module.exports = {
         required: false
       }
     ],
-    sample: {
-      delta: {
-        type: 'number',
-        label: 'Delta'
-      },
-      // direction: {
-      //   type: 'string',
-      //   label: 'Direction'
-      // },
-      // task__attribute: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__checklist: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__checklist[]completed: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__checklist[]id: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__checklist[]text: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__collapseChecklist: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // task__completed: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // task__date: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__dateCreated: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__id: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__notes: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__priority: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // task__reminders: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__tags__79a679a5-d5a4-4cdc-b371-e3c0dc6d8337: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // task__text: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__type: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // task__value: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // type: {
-      //   type: 'string',
-      //   label: 'Type'
-      // },
-      // user___id: {
-      //   type: 'string',
-      //   label: 'undefined'
-      // },
-      // user__stats__gp: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // user__stats__hp: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // user__stats__maxHealth: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // user__stats__maxMP: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // user__stats__mp: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // },
-      // user__stats__toNextLevel: {
-      //   type: 'undefined',
-      //   label: 'undefined'
-      // }
-    },
 
-    perform: triggerTaskactivity
+    performSubscribe: subscribeHook,
+    performUnsubscribe: unsubscribeHook,
+    perform: getTask,
+    performList: getFallbackRealTask,
+
+    sample: convertWebhookDataToZapier(fakeSampleData),
   }
 };
