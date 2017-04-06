@@ -1,5 +1,6 @@
 const GroupChatReceivedTrigger = require('./triggers/group_chat_received');
 const TaskActivityTrigger = require('./triggers/task_activity');
+const TaskScoredTrigger = require('./triggers/task_scored');
 const FindTaskSearch = require('./searches/find_task');
 const ScoreTaskCreate = require('./creates/score_task');
 const CreateTaskCreate = require('./creates/create_task');
@@ -37,6 +38,7 @@ const App = {
   triggers: {
     [GroupChatReceivedTrigger.key]: GroupChatReceivedTrigger,
     [TaskActivityTrigger.key]: TaskActivityTrigger,
+    [TaskScoredTrigger.key]: TaskScoredTrigger,
   },
 
   searches: {
