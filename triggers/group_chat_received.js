@@ -1,34 +1,18 @@
 'use strict';
 
-const subscribeHook = (z, bundle) => {
-  const data = {
-    url: bundle.targetUrl,
+const webhookHandlers = require('../lib/webhook');
+
+const subscribeHook = webhookHandlers.createSubscribeHookHandler((bundle) => {
+  return {
     label: 'Zapier Group Chat Received Webhook',
     type: 'groupChatReceived',
     options: {
       groupId: bundle.inputData.groupId
     }
   };
+});
 
-  const promise = z.request({
-    url: 'https://habitica.com/api/v3/user/webhook',
-    method: 'POST',
-    body: data,
-  });
-
-  return promise.then((response) => JSON.parse(response.content).data);
-};
-
-const unsubscribeHook = (z, bundle) => {
-  const hookId = bundle.subscribeData.id;
-
-  const promise = z.request({
-    url: `https://habitica.com/api/v3/user/webhook/${hookId}`,
-    method: 'DELETE',
-  });
-
-  return promise.then((response) => JSON.parse(response.content).data);
-};
+const unsubscribeHook = webhookHandlers.unsubscribeHandler;
 
 const getChat = (z, bundle) => {
   const data = convertWebhookDataToZapier(bundle.cleanedRequest);

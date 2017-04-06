@@ -1,8 +1,9 @@
 'use strict';
 
-const subscribeHook = (z, bundle) => {
-  const data = {
-    url: bundle.targetUrl,
+const webhookHandlers = require('../lib/webhook');
+
+const subscribeHook = webhookHandlers.createSubscribeHookHandler((bundle) => {
+  return {
     label: 'Zapier Task Webhook',
     type: 'taskActivity',
     options: {
@@ -10,28 +11,11 @@ const subscribeHook = (z, bundle) => {
       created: bundle.inputData.created === 'true',
       updated: bundle.inputData.updated === 'true',
       deleted: bundle.inputData.deleted === 'true',
-    }
+    },
   };
+});
 
-  const promise = z.request({
-    url: 'https://habitica.com/api/v3/user/webhook',
-    method: 'POST',
-    body: data,
-  });
-
-  return promise.then((response) => JSON.parse(response.content).data);
-};
-
-const unsubscribeHook = (z, bundle) => {
-  const hookId = bundle.subscribeData.id;
-
-  const promise = z.request({
-    url: `https://habitica.com/api/v3/user/webhook/${hookId}`,
-    method: 'DELETE',
-  });
-
-  return promise.then((response) => JSON.parse(response.content).data);
-};
+const unsubscribeHook = webhookHandlers.unsubscribeHandler;
 
 const getTask = (z, bundle) => {
   const data = bundle.cleanedRequest;
