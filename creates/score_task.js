@@ -1,25 +1,23 @@
-// "Create" stub created by 'zapier convert'. This is just a stub - you will need to edit!
+'use strict';
 
-// create a particular scoretask by name
 const createScoretask = (z, bundle) => {
+  const taskId = bundle.inputData.taskId;
+  const direction = bundle.inputData.direction;
   const responsePromise = z.request({
     method: 'POST',
-    url: 'https://habitica.com/api/v3/tasks/{{taskId}}/score/{{direction}}',
-    data: JSON.stringify({
-      EXAMPLE: bundle.inputData.EXAMPLE
-    })
+    url: `https://habitica.com/api/v3/tasks/${taskId}/score/${direction}`,
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => JSON.parse(response.content).data);
 };
 
 module.exports = {
   key: 'score_task',
-  noun: 'Scoretask',
+  noun: 'Task',
 
   display: {
-    label: 'Create Scoretask',
-    description: 'Creates a scoretask.'
+    label: 'Score Task',
+    description: 'Scores an existing Task'
   },
 
   operation: {
@@ -27,122 +25,51 @@ module.exports = {
       {
         key: 'taskId',
         label: 'Task ID',
-        helpText: 'ID of the task to score.',
+        helpText: 'ID or alias of the task to score.',
         type: 'string',
         required: true
-      },
-      {
+      }, {
         key: 'direction',
         label: 'Direction',
         helpText: 'Either "up" or "down". If you want to mark a given Daily or ToDo as completed, score "up".',
-        type: 'string',
+        choices: {
+          up: 'Up',
+          down: 'Down',
+        },
         required: true
       }
     ],
     sample: {
-      buffs__con: {
-        type: 'undefined',
-        label: 'undefined'
+      delta: 0.9746999906450404,
+      _tmp: { quest: {} },
+      hp: 48.1,
+      mp: 30,
+      exp: 54,
+      gp: 6.031504018368912,
+      lvl: 1,
+      class: 'warrior',
+      points: 0,
+      str: 0,
+      con: 0,
+      int: 0,
+      per: 0,
+      buffs: {
+        str: 0,
+        int: 0,
+        per: 0,
+        con: 0,
+        stealth: 0,
+        streaks: false,
+        snowball: false,
+        spookySparkles: false,
+        shinySeed: false,
+        seafoam: false
       },
-      buffs__int: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__per: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__seafoam: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__shinySeed: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__snowball: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__spookySparkles: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__stealth: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__str: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      buffs__streaks: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      class: {
-        type: 'string',
-        label: 'Class'
-      },
-      con: {
-        type: 'undefined',
-        label: 'Constitution'
-      },
-      delta: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      exp: {
-        type: 'undefined',
-        label: 'Experience'
-      },
-      gp: {
-        type: 'string',
-        label: 'Gold'
-      },
-      hp: {
-        type: 'undefined',
-        label: 'Health'
-      },
-      int: {
-        type: 'undefined',
-        label: 'Intelligence'
-      },
-      lvl: {
-        type: 'undefined',
-        label: 'Level'
-      },
-      mp: {
-        type: 'string',
-        label: 'Mana'
-      },
-      per: {
-        type: 'undefined',
-        label: 'Perception'
-      },
-      points: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      str: {
-        type: 'undefined',
-        label: 'Strength'
-      },
-      training__con: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      training__int: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      training__per: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      training__str: {
-        type: 'undefined',
-        label: 'undefined'
+      training: {
+        int: 0,
+        per: 0,
+        str: 0,
+        con: 0
       }
     },
 
