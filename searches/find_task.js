@@ -1,24 +1,17 @@
-// Search stub created by 'zapier convert'. This is just a stub - you will need to edit!
-
-// find a particular findtask by name
 const searchFindtask = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://habitrpg-delta.herokuapp.com/api/v3/tasks/user',
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
-    }
+    url: 'https://habitica.com/api/v3/tasks/user',
   });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
+  return responsePromise.then(response => JSON.parse(response.content).data);
 };
 
 module.exports = {
   key: 'find_task',
-  noun: 'Findtask',
+  noun: 'Task',
 
   display: {
-    label: 'Find a Findtask',
-    description: 'Finds a findtask.'
+    label: 'Find a Task 1',
+    description: 'Finds a task.'
   },
 
   operation: {
@@ -32,54 +25,24 @@ module.exports = {
       }
     ],
     sample: {
-      attribute: {
-        type: 'string',
-        label: 'undefined'
-      },
-      checklist: {
-        type: 'string',
-        label: 'undefined'
-      },
-      collapseChecklist: {
-        type: 'undefined',
-        label: 'undefined'
-      },
-      completed: {
-        type: 'undefined',
-        label: 'Completed'
-      },
-      dateCreated: {
-        type: 'string',
-        label: 'Date Created'
-      },
-      id: {
-        type: 'string',
-        label: 'Task ID'
-      },
-      notes: {
-        type: 'string',
-        label: 'Task Notes'
-      },
-      priority: {
-        type: 'undefined',
-        label: 'Priority'
-      },
-      reminders: {
-        type: 'string',
-        label: 'undefined'
-      },
-      text: {
-        type: 'string',
-        label: 'Task Name'
-      },
-      type: {
-        type: 'string',
-        label: 'Type'
-      },
-      value: {
-        type: 'undefined',
-        label: 'Task Value'
-      }
+      _id: '07b8db25-25f2-45cf-b9f6-1503764ec388',
+      userId: '4c85b82b-1777-4bee-9fc5-72dd2b043f68',
+      text: 'New test',
+      updatedAt: '2017-04-19T02:47:15.325Z',
+      createdAt: '2017-04-19T02:47:15.325Z',
+      reminders: [],
+      group: [Object],
+      challenge: {},
+      attribute: 'str',
+      priority: 1,
+      value: 0,
+      tags: [],
+      notes: '',
+      type: 'todo',
+      checklist: [],
+      collapseChecklist: false,
+      completed: false,
+      id: '07b8db25-25f2-45cf-b9f6-1503764ec388' ,
     },
 
     perform: searchFindtask
