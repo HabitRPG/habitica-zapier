@@ -70,7 +70,7 @@ module.exports = {
 
   display: {
     label: 'New Group Chat',
-    description: 'Triggers when a new chat appears in a group (party or guild).'
+    description: 'Triggers when a new chat appears in a group (Party or Guild).'
   },
 
   operation: {
@@ -79,7 +79,7 @@ module.exports = {
       {
         key: 'groupId',
         label: 'Group',
-        helpText: 'Choose one of your groups (Party or Guilds). The ID can be found on the group page on the website.',
+        helpText: 'Choose one of your groups (Party or Guilds).',
         dynamic: 'groupList.id.name',
         type: 'string',
         required: true
