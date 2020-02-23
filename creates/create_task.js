@@ -21,7 +21,7 @@ module.exports = {
 
   display: {
     label: 'Create Task',
-    description: 'Creates a new task.'
+    description: 'Creates a new task (Habit, Daily, To-Do, or Reward).'
   },
 
   operation: {
@@ -41,25 +41,25 @@ module.exports = {
       }, {
         key: 'text',
         label: 'Name',
-        helpText: 'The name of the habit, daily, to-do or reward.',
+        helpText: 'The name of the task.',
         type: 'string',
         required: true
       }, {
         key: 'notes',
         label: 'Notes',
-        helpText: 'Enter all notes that should be attached to the task here.',
+        helpText: 'Notes that should be attached to the task.',
         type: 'text',
         required: false
       }, {
         key: 'priority',
         label: 'Priority',
-        helpText: 'Difficulty, options are 0.1, 1, 1.5, 2; eqivalent of Trivial, Easy, Medium, Hard. You may also use symbolic math expressions supported by nerdamer http://nerdamer.com/documentation.html ',
+        helpText: 'Difficulty, options are 0.1, 1, 1.5, 2 (eqivalent of Trivial, Easy, Medium, Hard).',
         type: 'string',
         required: false
       }, {
         key: 'alias',
         label: 'Alias',
-        helpText: 'A human readable id for your task. Task short names can only contain alphanumeric characters, underscores and dashes and must be unique among all your tasks. Useful when creating a sync between Habitica and another service. You may want to set the task alias to other_service_name-id_from_other_service so that you can identify the task after creation.',
+        helpText: 'A human-readable ID for your task. Task aliases can only contain alphanumeric characters, underscores, and dashes and must be unique among all your tasks. Useful when creating a sync between Habitica and another service. You may want to set the task alias to other_service_name-id_from_other_service so that you can identify the task after creation.',
         type: 'string',
         required: false
       },
@@ -95,7 +95,7 @@ module.exports = {
           return [{
             key: 'frequency',
             label: 'Freqency',
-            helpText: 'Applicable only to Dailys. Choose the kind of Daily.',
+            helpText: 'Applicable only to Dailies. Choose the kind of Daily.',
             choices: {
               daily: 'Every X Days',
               weekly: 'On Certain Days of the Week',
@@ -115,7 +115,7 @@ module.exports = {
           return [{
             key: 'value',
             label: 'Price',
-            helpText: 'Only applicable to Rewards. Sets the price of the reward.',
+            helpText: 'Only applicable to Rewards. Set the price of the reward.',
             type: 'number',
             required: false,
           }];
@@ -131,7 +131,7 @@ module.exports = {
           return [{
             key: 'everyX',
             label: 'Every X Days',
-            helpText: 'Applicable only to Dailys with a frequency of "Every X Days". Choose how often the Daily should repeat.',
+            helpText: 'Applicable only to Dailies with a frequency of "Every X Days". Choose how often the Daily should repeat.',
             type: 'integer',
             required: false,
           }];
