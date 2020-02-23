@@ -17,7 +17,7 @@ describe('creates', () => {
         inputData: {
           type: 'todo',
           text: 'Write more tests :)',
-          priority: '1000/2000'
+          priority: '2',
         }
       };
       appTester(App.creates.create_task.operation.perform, bundle)

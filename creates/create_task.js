@@ -1,7 +1,10 @@
 'use strict';
 
 const createCreatetask = (z, bundle) => {
-  bundle.inputData.priority = priority >= 2 ?2:priority>=1.5?1.5:priority >= 1?1:0.1;
+  if (bundle.inputData.priority) {
+    let priority = parseFloat(bundle.inputData.priority);
+    bundle.inputData.priority = priority >= 2 ? 2 : priority >= 1.5 ? 1.5 : priority >= 1 ? 1 : 0.1;
+  }
 
   const responsePromise = z.request({
     method: 'POST',
