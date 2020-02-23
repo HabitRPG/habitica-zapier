@@ -1,3 +1,5 @@
+'use strict';
+
 const searchFindtask = (z, bundle) => {
   const responsePromise = z.request({
     url: 'https://habitica.com/api/v3/tasks/user',
@@ -31,7 +33,7 @@ module.exports = {
       updatedAt: '2017-04-19T02:47:15.325Z',
       createdAt: '2017-04-19T02:47:15.325Z',
       reminders: [],
-      group: [Object],
+      group: [],
       challenge: {},
       attribute: 'str',
       priority: 1,

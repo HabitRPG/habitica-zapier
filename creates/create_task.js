@@ -1,6 +1,17 @@
 'use strict';
 
+const nerdamer = require('nerdamer');
+
 const createCreatetask = (z, bundle) => {
+  let strictParseFloat = function(value) {
+      if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(value))
+        return Number(value);
+    return NaN;
+  }
+
+  let priority = strictParseFloat(nerdamer(bundle.inputData.priority).evaluate().text());
+  bundle.inputData.priority = priority >= 2 ?2:priority>=1.5?1.5:priority >= 1?1:0.1;
+
   const responsePromise = z.request({
     method: 'POST',
     url: 'https://habitica.com/api/v3/tasks/user',
@@ -44,6 +55,12 @@ module.exports = {
         label: 'Notes',
         helpText: 'Enter all notes that should be attached to the task here.',
         type: 'text',
+        required: false
+      }, {
+        key: 'priority',
+        label: 'Priority',
+        helpText: 'Difficulty, options are 0.1, 1, 1.5, 2; eqivalent of Trivial, Easy, Medium, Hard. You may also use symbolic math expressions supported by nerdamer http://nerdamer.com/documentation.html ',
+        type: 'string',
         required: false
       }, {
         key: 'alias',
