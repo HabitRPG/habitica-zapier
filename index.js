@@ -32,7 +32,7 @@ const App = {
     test: {
       url: 'https://habitica.com/api/v3/user'
     },
-    connectionLabel: '@{{bundle.inputData.auth.local.username}} / {{bundle.authData.userId}}',
+    connectionLabel: '@{{bundle.inputData.data.auth.local.username}} / {{bundle.authData.userId}}',
   },
 
   // beforeRequest & afterResponse are optional hooks into the provided HTTP client
