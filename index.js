@@ -31,7 +31,7 @@ const App = {
     ],
     test: {
       url: 'https://habitica.com/api/v3/user'
-    }
+    },
     connectionLabel: '@{{auth.local.username}}',
   },
 
