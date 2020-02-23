@@ -14,13 +14,28 @@ const App = {
   authentication: {
     type: 'custom',
     fields: [
-      {key: 'userId', label: 'User Id', required: true, type: 'string'},
-      {key: 'apiKey', label: 'API Key', required: true, type: 'string'},
+      {
+        key: 'userId',
+        label: 'User ID',
+        required: true,
+        type: 'string',
+        helpText: 'See [API Options](https://habitica.fandom.com/wiki/API_Options) to learn how to find your User ID.'
+      },
+      {
+        key: 'apiKey',
+        label: 'API Token',
+        required: true,
+        type: 'string',
+        helpText: 'See [API Options](https://habitica.fandom.com/wiki/API_Options) to learn how to find your API Token.'
+      }
     ],
     test: {
       url: 'https://habitica.com/api/v3/user'
     }
+    connectionLabel: '@{{auth.local.username}}',
   },
+
+
 
   // beforeRequest & afterResponse are optional hooks into the provided HTTP client
   beforeRequest: [
