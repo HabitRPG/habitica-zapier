@@ -22,6 +22,7 @@ const App = {
     }
   },
 
+  // beforeRequest & afterResponse are optional hooks into the provided HTTP client
   beforeRequest: [
     (request, z, bundle) => {
       request.headers['x-api-user'] = bundle.authData.userId;
@@ -31,20 +32,27 @@ const App = {
     }
   ],
 
+  // beforeRequest & afterResponse are optional hooks into the provided HTTP client
+  afterResponse: [],
+
+  // If you want to define optional resources to simplify creation of triggers, searches, creates - do that here!
   resources: {
     group: groupResource,
   },
 
+  // If you want your trigger to show up, you better include it here!
   triggers: {
     [GroupChatReceivedTrigger.key]: GroupChatReceivedTrigger,
     [TaskActivityTrigger.key]: TaskActivityTrigger,
     [TaskScoredTrigger.key]: TaskScoredTrigger,
   },
 
+  // If you want your searches to show up, you better include it here!
   searches: {
     [FindTaskSearch.key]: FindTaskSearch,
   },
 
+  // If you want your creates to show up, you better include it here!
   creates: {
     [ScoreTaskCreate.key]: ScoreTaskCreate,
     [CreateTaskCreate.key]: CreateTaskCreate,
