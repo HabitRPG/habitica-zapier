@@ -1,15 +1,6 @@
 'use strict';
 
-const nerdamer = require('nerdamer');
-
 const createCreatetask = (z, bundle) => {
-  let strictParseFloat = function(value) {
-      if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(value))
-        return Number(value);
-    return NaN;
-  }
-
-  let priority = strictParseFloat(nerdamer(bundle.inputData.priority).evaluate().text());
   bundle.inputData.priority = priority >= 2 ?2:priority>=1.5?1.5:priority >= 1?1:0.1;
 
   const responsePromise = z.request({
