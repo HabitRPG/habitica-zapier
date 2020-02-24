@@ -2,7 +2,7 @@
 
 const searchFindtask = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://habitica.com/api/v3/tasks/user',
+    url: `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/tasks/user`,
   });
   return responsePromise.then(response => JSON.parse(response.content).data);
 };
