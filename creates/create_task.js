@@ -90,7 +90,18 @@ module.exports = {
             helpText: 'Applicable only to Habits. Creates a Habit with a (-) button.',
             type: 'boolean',
             required: true,
-          }, attribute];
+          }, {
+              key: 'frequency',
+              label: 'Freqency',
+              helpText: 'Applicable only to Habits. Choose how frequently to reset your streak.',
+              choices: {
+                daily: 'Every day',
+                weekly: 'Every week',
+                monthly: 'Every month',
+              },
+              required: true,
+            },
+            attribute];
         } else if (bundle.inputData.type === 'daily') {
           return [{
             key: 'frequency',
