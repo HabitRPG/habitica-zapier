@@ -21,7 +21,7 @@ const getChat = (z, bundle) => {
 };
 
 const getFallbackRealChat = (z, bundle) => {
-  const url = `https://habitica.com/api/v3/groups/${bundle.inputData.groupId}/chat`;
+  const url = `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/groups/${bundle.inputData.groupId}/chat`;
   const responsePromise = z.request({
     url: url
   });

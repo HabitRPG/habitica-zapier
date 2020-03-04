@@ -30,7 +30,7 @@ const App = {
       }
     ],
     test: {
-      url: 'https://habitica.com/api/v3/user'
+      url: `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/user`
     },
     connectionLabel: '@{{bundle.inputData.auth.local.username}} / {{bundle.authData.userId}}',
   },

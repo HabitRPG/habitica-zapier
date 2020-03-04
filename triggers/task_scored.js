@@ -24,7 +24,7 @@ const getTask = (z, bundle) => {
 };
 
 const getFallbackRealTask = (z, bundle) => {
-  const url = 'https://habitica.com/api/v3/tasks/user';
+  const url = `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/tasks/user`;
   const responsePromise = z.request({
     url: url
   });
