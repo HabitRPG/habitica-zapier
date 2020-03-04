@@ -8,7 +8,7 @@ const createCreatetask = (z, bundle) => {
 
   const responsePromise = z.request({
     method: 'POST',
-    url: 'https://habitica.com/api/v3/tasks/user',
+    url: `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/tasks/user`,
     body: bundle.inputData
   });
 

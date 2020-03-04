@@ -5,7 +5,7 @@ const createScoretask = (z, bundle) => {
   const direction = bundle.inputData.direction;
   const responsePromise = z.request({
     method: 'POST',
-    url: `https://habitica.com/api/v3/tasks/${taskId}/score/${direction}`,
+    url: `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/tasks/${taskId}/score/${direction}`,
   });
   return responsePromise
     .then(response => JSON.parse(response.content).data);
