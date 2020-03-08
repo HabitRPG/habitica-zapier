@@ -52,7 +52,7 @@ module.exports = {
         required: false
       }, {
         key: 'priority',
-        label: 'Priority',
+        label: 'Difficulty',
         helpText: 'Difficulty, options are 0.1, 1, 1.5, 2 (eqivalent of Trivial, Easy, Medium, Hard).',
         type: 'string',
         required: false
