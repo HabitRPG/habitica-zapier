@@ -1,0 +1,33 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo docker run --name mongo -d -p 27017:27017 mongo
+      - name: Checkout Habitica
+        uses: actions/checkout@v2
+        with:
+          path: habitica
+          repository: HabitRPG/habitica
+          ref: 'release'
+      - run: |
+          cd habitica
+          cp config.json.example config.json
+          npm ci
+          node ./website/server/index.js & cd ..
+      - name: Checkout Zapier interation
+        uses: actions/checkout@v2
+        with:
+          path: habitica-zapier
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - run: npm install -g zapier-platform-cli
+      - run: |
+          cd habitica-zapier
+          npm install
+          zapier test
+        env:
+          CI: true
+          BASE_HABITICA_URI: http://localhost:3000

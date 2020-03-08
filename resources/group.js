@@ -12,7 +12,7 @@ module.exports = {
     operation: {
       perform: (z) => {
         return z.request({
-          url: 'https://habitica.com/api/v3/groups',
+          url: `${process.env.BASE_HABITICA_URI||'https://habitica.com'}/api/v3/groups`,
           params: {
             type: 'party,guilds'
           }
