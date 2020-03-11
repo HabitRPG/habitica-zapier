@@ -5,6 +5,13 @@ const createCreatetask = (z, bundle) => {
     let priority = parseFloat(bundle.inputData.priority);
     bundle.inputData.priority = priority >= 2 ? 2 : priority >= 1.5 ? 1.5 : priority >= 1 ? 1 : 0.1;
   }
+  if(bundle.inputData.type === 'daily' && bundle.inputData.frequency === 'monthly'){
+    let day = new Date(bundle.inputData.startDate).getDate();
+    if(bundle.inputData.repeatOn === 'dom')
+      bundle.inputData.daysOfMonth = [day];
+    if(bundle.inputData.repeatOn === 'dow')
+      bundle.inputData.weeksOfMonth = [Math.floor(day/7)]
+  }
 
   const responsePromise = z.request({
     method: 'POST',
@@ -103,13 +110,21 @@ module.exports = {
             },
             attribute];
         } else if (bundle.inputData.type === 'daily') {
-          return [{
+          return [
+            {
+              key: 'startDate',
+              label: 'Start Date',
+              type: 'datetime',
+              required: true,
+            },
+          {
             key: 'frequency',
             label: 'Freqency',
             helpText: 'Applicable only to Dailies. Choose the kind of Daily.',
             choices: {
               daily: 'Every X Days',
               weekly: 'On Certain Days of the Week',
+              monthly: 'Evey X Months',
             },
             required: true,
             altersDynamicFields: true,
@@ -190,6 +205,20 @@ module.exports = {
             type: 'boolean',
             required: false,
           }];
+        } else if (bundle.inputData.frequency === 'monthly') {
+          return [{
+            key: 'everyX',
+            label: 'Evey X Months',
+            helpText: 'Applicable only to Dailies with a frequency of "Evey X Months". Choose how often the Daily should repeat.',
+            type: 'integer',
+            required: true,
+          },
+            {
+              key: 'repeatOn',
+              required: true,
+              label:"Repeat On",
+              choices: { dom: 'Day of the Month', dow: 'Day of the Week' }
+            }];
         }
 
         return [];

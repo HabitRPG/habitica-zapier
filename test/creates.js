@@ -50,5 +50,32 @@ describe('creates', () => {
           })
           .catch(done);
     });
+      it('should create a new daily that repeats monthly', (done) => {
+          const bundle = {
+              authData: {
+                  userId: process.env.USER_ID,
+                  apiKey: process.env.API_KEY
+              },
+              inputData: {
+                  type: 'daily',
+                  text: 'Improve a test',
+                  priority: '2',
+                  frequency: 'monthly',
+                  everyX: "1",
+                  startDate:"2020-03-05T15:38:33.192Z",
+                  repeatOn: "dom"
+              }
+          };
+          appTester(App.creates.create_task.operation.perform, bundle)
+              .then((result) => {
+                  result.should.have.property('type').equal('daily');
+                  result.should.have.property('text').equal('Improve a test');
+                  result.should.have.property('priority').equal(2);
+                  result.should.have.property('frequency').equal('monthly');
+                  result.should.have.property('daysOfMonth').deepEqual([5]);
+                  done();
+              })
+              .catch(done);
+      });
   });
 });
