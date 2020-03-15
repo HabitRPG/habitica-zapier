@@ -1,0 +1,23 @@
+name: Deploy
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - run: npm install -g zapier-platform-cli
+      - run: |
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          npm install
+          npm version $(git describe --tags --abbrev=0)
+          zapier push
+        env:
+          CI: true
+          ZAPIER_DEPLOY_KEY: ${{ secrets.ZAPIER_DEPLOY_KEY }}
